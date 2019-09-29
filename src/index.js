@@ -1,29 +1,33 @@
+var bigInt = require("big-integer");
 myzeros = (expression) => {
   // var matches = '{example1}{example2}{example3}'.match(/\{.*?\}/g);
   let array = expression.match(/[0-9]+[!]+/g);
-  let getarrayofnumbers = array.map(x => [x, Returnnubmbers(x)]);
+  
 
-  // let getarrayofnumbers2 = array.map(x =>  Returnnubmbers(x));
+  let getarrayofnumbers2 = array.map(x =>  Returnnubmbers(x));
 
-  // var temp3 = getarrayofnumbers2.reduce(function (a, b) {
-  //   // return a * b;
-  //   return BigInt(a * b)+"";
-  // }, 1);
-  // let zeros = (temp3).toLocaleString('fullwide', {useGrouping:false}).match(/[0]+$/g);
-  // if(zeros ==null){
-  //   return 0;
-  // }
-  // return zeros.length;
-  getarrayofnumbers.forEach(element => {
-    expression = expression.replace(element[0], element[1]);
-  });
+  var temp3 = getarrayofnumbers2.reduce(function (a, b) {
+    // a= BigInt(parseInt(a));
+    // b= BigInt(parseInt(b));
+    let temp =bigInt(a).multiply(b);
+    return temp;
+  }, 1);
+  let zeros = (temp3.value).toLocaleString('fullwide', {useGrouping:false}).match(/[0]+$/g);
+  if(zeros ==null){
+    return 0;
+  }
+  return zeros[0].length;
+  // let getarrayofnumbers = array.map(x => [x, Returnnubmbers(x)]);
+  // getarrayofnumbers.forEach(element => {
+  //   expression = expression.replace(element[0], element[1]);
+  // });
 
-  let value =eval(expression);
-  let stringreverse = value.toString().split("").reverse().join("");
-  // let temp2 = value.match(/[0]+$/)
-  var splitString =parseInt(stringreverse);
-  let temp = value.toString().length - splitString.toString().length;
-  return temp;
+  // let value =BigInt(eval(expression));
+  // let stringreverse = value.toString().split("").reverse().join("");
+  // // let temp2 = value.match(/[0]+$/)
+  // var splitString =parseInt(stringreverse);
+  // let temp = value.toString().length - splitString.toString().length;
+  // return temp;
   
 }
 Returnnubmbers = (item) => {
@@ -41,14 +45,14 @@ Returnnubmbers = (item) => {
     array.push(i);
   }
   let temp = array.reduce(function (a, b) {
-    return BigInt(a * b)+"";
+    return bigInt(a).multiply(b);
     // return a * b;
   }, 1);
   return temp;
 }
 
 
-myzeros('5!');
+myzeros('90!!*10!!');
 module.exports = function zeros(expression) {
   return myzeros(expression);
 }
