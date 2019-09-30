@@ -17,9 +17,5 @@
   },
   "devDependencies": {
     "mocha": "^3.2.0"
-  },
-  "homepage": "https://github.com/yankouskia/additional_6#readme",
-  "dependencies": {
-    "big-integer": "^1.6.45"
   }
 }

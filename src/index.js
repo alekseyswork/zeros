@@ -1,19 +1,18 @@
-var bigInt = require("big-integer");
 myzeros = (expression) => {
   // var matches = '{example1}{example2}{example3}'.match(/\{.*?\}/g);
   let array = expression.match(/[0-9]+[!]+/g);
-  
 
-  let getarrayofnumbers2 = array.map(x =>  Returnnubmbers(x));
+
+  let getarrayofnumbers2 = array.map(x => Returnnubmbers(x));
 
   var temp3 = getarrayofnumbers2.reduce(function (a, b) {
     // a= BigInt(parseInt(a));
     // b= BigInt(parseInt(b));
-    let temp =bigInt(a).multiply(b);
+    let temp = multiply(a, b);
     return temp;
   }, 1);
-  let zeros = (temp3.value).toLocaleString('fullwide', {useGrouping:false}).match(/[0]+$/g);
-  if(zeros ==null){
+  let zeros = (temp3).toLocaleString('fullwide', { useGrouping: false }).match(/[0]+$/g);
+  if (zeros == null) {
     return 0;
   }
   return zeros[0].length;
@@ -28,8 +27,37 @@ myzeros = (expression) => {
   // var splitString =parseInt(stringreverse);
   // let temp = value.toString().length - splitString.toString().length;
   // return temp;
-  
+
 }
+
+function multiply(a, b) {
+  var aa = a.toString().split('').reverse();
+  var bb = b.toString().split('').reverse();
+
+  var stack = [];
+
+  for (var i = 0; i < aa.length; i++) {
+    for (var j = 0; j < bb.length; j++) {
+      var m = aa[i] * bb[j];
+      stack[i + j] = (stack[i + j]) ? stack[i + j] + m : m;
+    }
+  }
+
+  for (var i = 0; i < stack.length; i++) {
+    var num = stack[i] % 10;
+    var move = Math.floor(stack[i] / 10);
+    stack[i] = num;
+
+    if (stack[i + 1])
+      stack[i + 1] += move;
+    else if (move != 0)
+      stack[i + 1] = move;
+  }
+
+
+  return stack.reverse().join('');
+}
+
 Returnnubmbers = (item) => {
   let j = 1;
   let num = parseInt(item, 10);
@@ -45,14 +73,14 @@ Returnnubmbers = (item) => {
     array.push(i);
   }
   let temp = array.reduce(function (a, b) {
-    return bigInt(a).multiply(b);
+    return multiply(a, b);
     // return a * b;
   }, 1);
   return temp;
 }
 
 
-myzeros('90!!*10!!');
+// myzeros('90!!*10!!');
 module.exports = function zeros(expression) {
   return myzeros(expression);
 }
